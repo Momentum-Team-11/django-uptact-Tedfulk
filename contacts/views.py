@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Contact
-from .forms import ContactForm
+from .models import Contact, Note
+from .forms import ContactForm, NoteForm
 
 
 # Create your views here.
 def list_contacts(request):
     contacts = Contact.objects.all()
+    notes = Note.objects.all()
     return render(request, "contacts/list_contacts.html",
-                  {"contacts": contacts})
+                  {"contacts": contacts, "notes": notes})
 
 
 def add_contact(request):
@@ -46,3 +47,24 @@ def delete_contact(request, pk):
 
     return render(request, "contacts/delete_contact.html",
                   {"contact": contact})
+
+
+def add_note(request, pk):
+    # get the associated contact
+    contact = get_object_or_404(Contact, pk=pk)
+    # We need a form!
+
+    form = NoteForm(data=request.POST)
+    if form.is_valid():
+        note = form.save(
+            commit=False
+        )  # this step lets us save the object, but NOT to rhe database yet!
+        # that's so we can do THIS step, associating the note with the contact
+        note.contact = contact
+        note.save()  # here is where we save the note with the relationship to contact and everything!
+        return redirect(to="contact_detail", pk=contact.pk)
+
+    return render(
+        request, "contacts/contact_detail.html", {
+            "form": form, "contact": contact}
+    )

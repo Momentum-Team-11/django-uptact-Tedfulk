@@ -41,12 +41,15 @@
       <div>{{ contact.birthday }}</div>
     </div>
     {% endif %}
-
     <p>
       <a href="{% url 'edit_contact' pk=contact.pk %}">Edit Contact</a><br>    
       <a class="red" href="{% url 'delete_contact' pk=contact.pk %}">Delete Contact</a>
     </p>
+    {% for note in notes %}
+    <div>{{ note.note }}</div>
+    <div>{{ note.created_date }}</div>
+    {% endfor %}
+    {% endfor %}
   </div>
-  {% endfor %}
 </div>  
 {% endblock %}

@@ -1,3 +1,5 @@
+from cgitb import text
+from datetime import datetime
 from django.db import models
 from django.core.validators import RegexValidator
 from localflavor.us.models import USStateField, USZipCodeField
@@ -20,3 +22,17 @@ class Contact(models.Model):
     state = USStateField(null=True, blank=True)
     zip_code = USZipCodeField(null=True, blank=True)
     birthday = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Note(models.Model):
+    note = models.CharField(max_length=500)
+    created_date = models.DateTimeField(
+        null=True, auto_now_add=datetime.now)
+    contact = models.ForeignKey(
+        Contact, related_name="note", on_delete=models.CASCADE)
+
+    # def __str__(self):
+    #     return self.text[:20]
