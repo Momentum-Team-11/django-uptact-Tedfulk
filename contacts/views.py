@@ -11,6 +11,17 @@ def list_contacts(request):
                   {"contacts": contacts, "notes": notes})
 
 
+def contact_detail(request, pk):
+    contact = get_object_or_404(Contact, pk=pk)
+    notes = Note.objects.filter(pk=contact.pk)
+    form = NoteForm()
+    return render(
+        request,
+        "contacts/contact_detail.html",
+        {"contact": contact, "pk": pk, "form": form, "notes": notes},
+    )
+
+
 def add_contact(request):
     if request.method == 'GET':
         form = ContactForm()
@@ -40,7 +51,7 @@ def edit_contact(request, pk):
 
 
 def delete_contact(request, pk):
-    contact = get_object_or_404(Contact, pk=pk)
+    contact = get_object_or_404(Contact, pk=contact.pk)
     if request.method == 'POST':
         contact.delete()
         return redirect(to='list_contacts')
@@ -65,6 +76,6 @@ def add_note(request, pk):
         return redirect(to="contact_detail", pk=contact.pk)
 
     return render(
-        request, "contacts/contact_detail.html", {
+        request, "contacts/add_note.html", {
             "form": form, "contact": contact}
     )

@@ -33,6 +33,3 @@ class Note(models.Model):
         null=True, auto_now_add=datetime.now)
     contact = models.ForeignKey(
         Contact, related_name="note", on_delete=models.CASCADE)
-
-    # def __str__(self):
-    #     return self.text[:20]

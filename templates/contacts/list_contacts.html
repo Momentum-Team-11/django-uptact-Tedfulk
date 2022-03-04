@@ -8,8 +8,7 @@
 <div class="flex flex-wrap">
   {% for contact in contacts %}
   <div class="w-33 pa3">
-    <h2>{{ contact.name }}</h2>
-
+    <h2><a href="{% url 'contact_detail' pk=contact.pk %}">{{ contact.name }}</a></h2>
     <div class="flex">
       <div class="pr2"><i class="icofont-location-pin"></i></div>
       <div>
@@ -45,10 +44,6 @@
       <a href="{% url 'edit_contact' pk=contact.pk %}">Edit Contact</a><br>    
       <a class="red" href="{% url 'delete_contact' pk=contact.pk %}">Delete Contact</a>
     </p>
-    {% for note in notes %}
-    <div>{{ note.note }}</div>
-    <div>{{ note.created_date }}</div>
-    {% endfor %}
     {% endfor %}
   </div>
 </div>  

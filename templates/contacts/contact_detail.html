@@ -36,31 +36,19 @@
  </div>
  {% endif %}
 
- {% if contact.notes %}
- {% for note in contact.notes.all %}
+ <h1>Add Note</h1>
+ {% if contact.note %}
+ {% for note in contact.note.all %}
  <div class="flex">
-  <p class="f5 lh-copy measure">{{ note.text }}</p>
- </div>
- {% endfor %}
- {% endif %}
-
- h1>Add Note</h1>
- {% if contact.notes %}
- {% for note in contact.notes.all %}
- <div class="flex">
-  <p class="f5 lh-copy measure">{{ note.text }}</p>
+  <p class="f5 lh-copy measure">{{ note.note }}</p>
  </div>
  <h4>Add note to this contact</h4>
- <div>
-  <form action="{% url 'add_note' pk=contact.pk %}" method="POST">
-   {% csrf_token %}
-   {{ form.as_p }}
-   <div>
-    <button type="submit">Add Note</button>
-   </div>
-   <div>{{ note.created_date }}</div>
-  </form>
- </div>
  {% endfor %}
+  {% endif %}
+  <p>
+   <a href="{% url 'edit_contact' pk=contact.pk %}">Edit Contact</a><br>
+   <a class="red" href="{% url 'delete_contact' pk=contact.pk %}">Delete Contact</a>
+  </p>
 
+<p><a href="{% url 'add_note' pk=contact.pk %}">Add New Note</a></p>
  {% endblock %}
