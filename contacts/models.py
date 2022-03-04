@@ -29,7 +29,7 @@ class Contact(models.Model):
 
 class Note(models.Model):
     note = models.CharField(max_length=500)
-    created_date = models.DateTimeField(
-        null=True, auto_now_add=datetime.now)
+    created_date = models.DateTimeField(auto_now=False,
+                                        null=True, auto_now_add=datetime.now)
     contact = models.ForeignKey(
         Contact, related_name="note", on_delete=models.CASCADE)

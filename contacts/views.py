@@ -51,13 +51,13 @@ def edit_contact(request, pk):
 
 
 def delete_contact(request, pk):
-    contact = get_object_or_404(Contact, pk=contact.pk)
+    contact = get_object_or_404(Contact, pk=pk)
     if request.method == 'POST':
         contact.delete()
         return redirect(to='list_contacts')
 
     return render(request, "contacts/delete_contact.html",
-                  {"contact": contact})
+                  {"contact": contact, "pk": pk})
 
 
 def add_note(request, pk):
