@@ -18,7 +18,8 @@ def contact_detail(request, pk):
     return render(
         request,
         "contacts/contact_detail.html",
-        {"contact": contact, "pk": pk, "form": form, "notes": notes},
+        {"contact": contact,
+            "pk": pk, "form": form, "notes": notes},
     )
 
 
@@ -76,6 +77,6 @@ def add_note(request, pk):
         return redirect(to="contact_detail", pk=contact.pk)
 
     return render(
-        request, "contacts/add_note.html", {
+        request, "contacts/contact_detail.html", {
             "form": form, "contact": contact}
     )
